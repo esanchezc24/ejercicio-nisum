@@ -5,6 +5,7 @@ import com.exercise.nisum.mapper.UserMapper;
 import com.exercise.nisum.model.Phone;
 import com.exercise.nisum.model.User;
 import com.exercise.nisum.request.user.CreateUserRequest;
+import com.exercise.nisum.request.user.UpdateUserRequest;
 import com.exercise.nisum.response.user.UserResponse;
 import com.exercise.nisum.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -51,9 +52,32 @@ public class UserController {
         User user = UserMapper.toEntity(request);
         List<Phone> phones = request.phones().stream()
                 .map(PhoneMapper::toEntity)
-                .collect(Collectors.toList());;
-        User savedUser = userService.save(user, phones);
+                .collect(Collectors.toList());
+        ;
+        User savedUser = userService.saveWithPhones(user, phones);
 
         return new ResponseEntity<>(UserMapper.toDto(savedUser), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
+        User user = userService.findById(id);
+        return ResponseEntity.ok(UserMapper.toDto(user));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @Valid @RequestBody UpdateUserRequest request) {
+        User user = UserMapper.toEntity(request);
+        List<Phone> phones = request.phones().stream()
+                .map(PhoneMapper::toEntity)
+                .collect(Collectors.toList());
+        User updatedUser = userService.updateWithPhones(id, user, phones);
+        return ResponseEntity.ok(UserMapper.toDto(updatedUser));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -29,27 +29,34 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User entity) {
-      return repository.save(entity);
+        return repository.save(entity);
     }
 
     @Override
     public User update(Long id, User entity) {
         User existingUser = findById(id);
-        phoneService.deletePhonesByUserId(id);
 
-        // Copiar propiedades nuevas al objeto existente, excluyendo id y createdAt
-        BeanUtils.copyProperties(entity, existingUser, "id", "createdAt", "updatedAt", "deletedAt", "isActive", "token");
+        BeanUtils.copyProperties(entity, existingUser,
+                "id", "createdAt", "deletedAt", "password", "lastLogin", "isActive", "token", "phones");
 
         existingUser.setUpdatedAt(LocalDateTime.now());
+        if (entity.getPassword() != null)
+            existingUser.setPassword(entity.getPassword());
 
-        phoneService.savePhones(entity.getPhones(), entity);
+        return repository.save(existingUser);
+    }
 
-        return repository.save(entity);
+    @Override
+    public User updateWithPhones(Long userId, User entity, List<Phone> phones) {
+        phoneService.deletePhonesByUserId(userId);
+        User user = update(userId, entity);
+        phoneService.savePhones(phones, user);
+        return user;
     }
 
     @Override
     public User findById(Long id) {
-        return repository.findById(id).get();
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
     @Override
@@ -65,7 +72,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(User entity, List<Phone> phones) {
+    public User saveWithPhones(User entity, List<Phone> phones) {
         User savedUser = repository.save(entity);
         phoneService.savePhones(phones, savedUser);
         savedUser.setPhones(phoneService.findPhonesByUserId(savedUser.getId()));

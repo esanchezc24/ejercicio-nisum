@@ -9,5 +9,7 @@ import java.util.List;
 public interface UserService extends CrudCommon<User, Long> {
     List<User> findAll();
 
-    User save(User entity, List<Phone> phones);
+    User saveWithPhones(User entity, List<Phone> phones);
+
+    User updateWithPhones(Long userId, User entity, List<Phone> phones);
 }

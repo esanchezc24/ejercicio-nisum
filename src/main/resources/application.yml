@@ -4,7 +4,7 @@ server:
 app:
   validation:
     password:
-      regex: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$ #mayúscula, minúscula, número, caracter especial, minimo 8 caracteres
+      regex: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$ #mayÃºscula, minÃºscula, nÃºmero, caracter especial, mÃ­nimo 8 caracteres
 
 
 spring:
