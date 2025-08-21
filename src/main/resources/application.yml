@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+app:
+  validation:
+    password:
+      regex: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$ #mayúscula, minúscula, número, caracter especial, minimo 8 caracteres
+
+
+spring:
+  application:
+    name: Nisum
+
+  datasource:
+    url: jdbc:h2:mem:nisumdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+  sql:
+    init:
+      schema-locations: classpath:/db/schema.sql

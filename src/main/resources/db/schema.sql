@@ -1,0 +1,23 @@
+-- Tabla de usuarios
+CREATE TABLE users (
+   id BIGINT AUTO_INCREMENT PRIMARY KEY,
+   name VARCHAR(100) NOT NULL,
+   email VARCHAR(150) NOT NULL UNIQUE,
+   password VARCHAR(255) NOT NULL,
+   last_login TIMESTAMP NULL,
+   is_active BOOLEAN DEFAULT TRUE,
+   token TEXT,
+   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   deleted_at TIMESTAMP NULL
+);
+
+-- Tabla de teléfonos
+CREATE TABLE phones (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    number VARCHAR(50) NOT NULL,
+    city_code VARCHAR(10),
+    country_code VARCHAR(10),
+    CONSTRAINT fk_phone_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
