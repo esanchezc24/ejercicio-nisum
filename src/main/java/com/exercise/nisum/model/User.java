@@ -7,6 +7,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -16,8 +17,8 @@ import java.util.List;
 @Data
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     private String name;
 
@@ -56,9 +57,6 @@ public class User {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void softDelete() {
-        this.isActive = false;
-        this.deletedAt = LocalDateTime.now();
-    }
+
 
 }

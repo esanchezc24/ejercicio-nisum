@@ -29,3 +29,7 @@ spring:
   sql:
     init:
       schema-locations: classpath:/db/schema.sql
+
+jwt:
+  secretKey: nisumKey
+  expirationTime: 86400000

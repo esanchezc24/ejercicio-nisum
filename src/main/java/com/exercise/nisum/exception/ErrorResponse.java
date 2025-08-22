@@ -1,7 +1,10 @@
 package com.exercise.nisum.exception;
 
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
+@Data
 public class ErrorResponse {
     private String mensaje;
     private int codeStatus;
@@ -13,27 +16,4 @@ public class ErrorResponse {
         this.fechaHora = fechaHora;
     }
 
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
-    }
-
-    public int getCodeStatus() {
-        return codeStatus;
-    }
-
-    public void setCodeStatus(int codeStatus) {
-        this.codeStatus = codeStatus;
-    }
-
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
-    }
-
-    public void setFechaHora(LocalDateTime fechaHora) {
-        this.fechaHora = fechaHora;
-    }
 }

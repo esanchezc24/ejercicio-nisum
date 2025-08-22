@@ -5,13 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class PhoneReponse {
-    private Long id;
+    private UUID id;
     private String number;
     private String cityCode;
     private String countryCode;

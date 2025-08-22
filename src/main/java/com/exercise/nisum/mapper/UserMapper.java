@@ -7,7 +7,6 @@ import com.exercise.nisum.response.user.UserResponse;
 import com.exercise.nisum.util.DateUtil;
 import lombok.Builder;
 
-import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
 @Builder
@@ -42,5 +41,4 @@ public class UserMapper {
                 .phones(entity.getPhones() != null ? entity.getPhones().stream().map(PhoneMapper::toDto).collect(Collectors.toList()) : null)
                 .build();
     }
-
 }

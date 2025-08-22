@@ -5,8 +5,6 @@ import com.exercise.nisum.request.phone.CreatePhoneRequest;
 import com.exercise.nisum.response.phone.PhoneReponse;
 import lombok.Builder;
 
-import java.util.stream.Collectors;
-
 @Builder
 public class PhoneMapper {
 

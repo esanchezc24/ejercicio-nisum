@@ -1,6 +1,6 @@
 -- Tabla de usuarios
 CREATE TABLE users (
-   id BIGINT AUTO_INCREMENT PRIMARY KEY,
+   id UUID PRIMARY KEY,
    name VARCHAR(100) NOT NULL,
    email VARCHAR(150) NOT NULL UNIQUE,
    password VARCHAR(255) NOT NULL,
@@ -14,10 +14,10 @@ CREATE TABLE users (
 
 -- Tabla de teléfonos
 CREATE TABLE phones (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL,
+    id UUID PRIMARY KEY,
+    user_id UUID NOT NULL,
     number VARCHAR(50) NOT NULL,
     city_code VARCHAR(10),
     country_code VARCHAR(10),
-    CONSTRAINT fk_phone_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
