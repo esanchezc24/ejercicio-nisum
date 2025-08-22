@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -39,10 +40,12 @@ public class UserServiceImpl implements UserService {
     @Value("${jwt.expirationTime}")
     private long expirationTime;
 
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public User save(User entity) {
         validateUserEmail(null, entity.getEmail());
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
         User savedUser = repository.save(entity);
         String token = generateJwtToken(savedUser);
         savedUser.setToken(token);
@@ -59,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
         existingUser.setUpdatedAt(LocalDateTime.now());
         if (entity.getPassword() != null) {
-            existingUser.setPassword(entity.getPassword());
+            existingUser.setPassword(passwordEncoder.encode(entity.getPassword()));
         }
 
         return repository.save(existingUser);
