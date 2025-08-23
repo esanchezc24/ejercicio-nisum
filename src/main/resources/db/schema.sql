@@ -1,3 +1,7 @@
+-- Eliminar tablas si ya existen
+DROP TABLE IF EXISTS phones;
+DROP TABLE IF EXISTS users;
+
 -- Tabla de usuarios
 CREATE TABLE users (
    id UUID PRIMARY KEY,

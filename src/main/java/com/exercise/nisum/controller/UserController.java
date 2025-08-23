@@ -82,7 +82,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/restore")
     public ResponseEntity<UserResponse> restoreUser(@PathVariable UUID id) {
         User user = userService.restore(id);
         return ResponseEntity.ok(UserMapper.toDto(user));
