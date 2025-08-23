@@ -30,11 +30,13 @@ spring:
     init:
       schema-locations: classpath:/db/schema.sql
 
-  doc:
-    api-docs:
-      path: /v3/api-docs
-    swagger-ui:
-      path: /swagger-ui.html
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
 
 jwt:
   secretKey: nisumKey
