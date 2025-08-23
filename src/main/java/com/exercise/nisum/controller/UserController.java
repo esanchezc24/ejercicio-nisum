@@ -44,9 +44,10 @@ public class UserController {
     }
 
 
+    @Operation(summary = "Crear un nuevo usuario")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Usuario creada exitosamente"),
-            @ApiResponse(responseCode = "400", description = "Usuario inválida")
+            @ApiResponse(responseCode = "201", description = "Usuario creado exitosamente"),
+            @ApiResponse(responseCode = "400", description = "Datos del usuario inválidos")
     })
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
@@ -60,12 +61,23 @@ public class UserController {
         return new ResponseEntity<>(UserMapper.toDto(savedUser), HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Obtener un usuario por ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuario encontrado exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable UUID id) {
         User user = userService.findById(id);
         return ResponseEntity.ok(UserMapper.toDto(user));
     }
 
+    @Operation(summary = "Actualizar un usuario existente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuario actualizado exitosamente"),
+            @ApiResponse(responseCode = "400", description = "Datos del usuario inválidos"),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    })
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable UUID id, @Valid @RequestBody UpdateUserRequest request) {
         User user = UserMapper.toEntity(request);
@@ -76,12 +88,22 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.toDto(updatedUser));
     }
 
+    @Operation(summary = "Eliminar un usuario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Usuario eliminado exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Restaurar un usuario eliminado")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuario restaurado exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    })
     @PatchMapping("/{id}/restore")
     public ResponseEntity<UserResponse> restoreUser(@PathVariable UUID id) {
         User user = userService.restore(id);
